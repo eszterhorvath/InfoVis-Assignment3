@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Best InfoVis project ever</title>
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/style.css')}}">
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="{{url_for('static',filename='js/map.js')}}"></script>
+</head>
+<body>
+
+<h1>Best InfoVis project ever</h1>
+<p>by Eszter Horváth, Johannes Brand</p>
+<p>TODO: create a nicer HTML</p>
+
+<!-- Container for the map -->
+<div class="container">
+    <p>Vienna</p>
+    <svg id="svg_map"></svg>
+</div>
+
+<script>
+    // calls the map rendering
+    initMap();
+</script>
+
+</body>
+</html>
