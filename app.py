@@ -3,6 +3,7 @@ import json
 import pandas
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from calculations import *
 
 app = Flask(__name__)
 
@@ -14,5 +15,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 def data():
 
     return render_template("index.html")
+
+
 if __name__ == '__main__':
     app.run()
