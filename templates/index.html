@@ -8,6 +8,7 @@
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="{{url_for('static',filename='js/map.js')}}"></script>
+    <script src="{{url_for('static',filename='js/wl_query.js')}}"></script>
 </head>
 <body>
 
@@ -17,13 +18,19 @@
 
 <!-- Container for the map -->
 <div class="container">
-    <p>Vienna</p>
-    <svg id="svg_map"></svg>
+    <div class="selector">
+        <p>Wiener Linien Selector</p>
+    </div>
+    <div class="map">
+        <p>Vienna</p>
+        <svg id="svg_map"></svg>
+    </div>
 </div>
 
 <script>
     // calls the map rendering
     initMap();
+    initSelectors();
 </script>
 
 </body>

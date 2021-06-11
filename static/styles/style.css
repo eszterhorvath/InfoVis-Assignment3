@@ -3,15 +3,45 @@ body {
     font-family: Calibri, Arial, Helvetica, sans-serif;
     color: #222222;
     background-color: #fff;
+    padding-right: 5em;
 }
 
 .container {
-    display: table-cell;
-    vertical-align:top;
-    height: 500px;
     padding: 10px;
-    border: 0px solid black;
+    border: 1px solid #f00;
     text-align: center;
     font-size: large;
+    display: flex;
 }
 
+.selector {
+    flex: auto;
+    padding: 10px;
+    border: 1px solid green;
+}
+
+.map {
+    flex: auto;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+select {
+    width: 100%;
+      -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+    -moz-padding-start: calc(10px - 3px);
+  height: 40px;
+  padding-left: 10px;
+  color: #000000;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+      box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+  border-radius: 3px;
+}
+
+select::-ms-expand {
+  display: none;
+}
