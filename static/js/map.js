@@ -1,16 +1,18 @@
-let mapWidth = 1020;
-let mapHeight = 500;
-let margin = 10;
+let mapWidth = 1220;
+let mapHeight = 800;
+let margin = 50;
 let map = null;
 let viennaProjection = null
 let viennaPathGenerator = null
 let s = null
 
+viennaProjection = d3.geoMercator().fitExtent([[margin, margin], [mapWidth - margin, mapHeight - margin]], s);
+
 function refreshMap() {
     if (map == null) { return; }
     mapWidth = Math.floor(d3.select(".map").style("width").replace("px", ""))
     mapHeight = Math.max(756, Math.floor(d3.select(".map").style("height").replace("px", "")))
-    viennaProjection = d3.geoMercator().fitExtent([[margin, margin], [mapWidth - margin, mapHeight - margin]], s);
+
     viennaPathGenerator = d3.geoPath().projection(viennaProjection);
 
     redrawMap();
