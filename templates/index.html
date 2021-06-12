@@ -15,7 +15,6 @@
 
 <h1>Best InfoVis project ever</h1>
 <p>by Eszter Horváth, Johannes Brand</p>
-<p>TODO: create a nicer HTML</p>
 
 <!-- Container for the map -->
 <div class="container">
@@ -29,9 +28,12 @@
 </div>
 
 <script>
+    window.onresize = function() { refreshMap(); }
+
     // calls the map rendering
     initMap();
     initSelectors();
+    drawLines(1)
 </script>
 
 </body>
