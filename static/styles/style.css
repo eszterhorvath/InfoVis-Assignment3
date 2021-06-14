@@ -11,7 +11,7 @@ body {
     text-align: center;
     font-size: large;
     display: flex;
-    margin: 150px 10px 10px 10px;
+    margin: 0;
 }
 
 .selector {
@@ -135,4 +135,9 @@ svg {
     background-color: white;
     opacity: 0.7;
     color: black;
+}
+
+.checkbox_container {
+    display: flex;
+    margin: 180px 10px 10px 10px;
 }
