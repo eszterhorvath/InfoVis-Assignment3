@@ -141,3 +141,7 @@ svg {
     display: flex;
     margin: 180px 10px 10px 10px;
 }
+
+.line {
+    stroke-width: 2;
+}

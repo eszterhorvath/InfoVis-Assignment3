@@ -1,15 +1,12 @@
-let modes = [{"name": "Subway", "value": 4}, {"name": "Tram", "value": 1},
-    {"name": "Bus", "value": 2}, {"name": "Train", "value": 5}]
-let subway = new Map()
-subway.set("U1", "#E3000F")
-subway.set("U2", "#A862A4")
-subway.set("U3", "#EF7C00")
-subway.set("U4", "#00963F")
-subway.set("U5", "#008F95")
-subway.set("U6", "#9D6830")
+let subway = new Map([["U1", "#E3000F" ], ["U2", "#A862A4"], ["U3", "#EF7C00"],
+    ["U4", "#00963F"], ["U5", "#008F95"], ["U6", "#9D6830"]])
+let modes = [{"name": "All modes", "value": 0}, {"name": "Subway", "value": 4, "color": subway}, {"name": "Tram", "value": 1, "color": '#CD295A'},
+    {"name": "Bus", "value": 2, "color": '#C582F0'}, {"name": "Train", "value": 5, "color": '#38ADAE'},
+    {"name": "Wiener Lokalbahnen", "color": "#005295", "value": 6}]
 let districs = []
 
 let selectedMode = 4
+let c = "#ff00ff"
 
 
 function initSelectors() {
@@ -47,28 +44,24 @@ function drawLines() {
         d3.select("#svg_map").append("g")
               .selectAll('path')
               .data(lines.features)
-              .enter().filter((d) => { return d.properties.LTYP == selectedMode;}).append('path')
+              .enter().filter((d) => { return d.properties.LTYP == selectedMode || selectedMode == 0 ||
+            (selectedMode == d.properties.LTYP - 5 && selectedMode == 1);}).append('path')
               .attr('stroke-width', '100.')
             .attr("class", "line").raise()
               .attr('d', viennaPathGenerator)
               .attr('fill', 'none')
               .attr('stroke', (d) => {
+                  // select color
+                  lineType = d.properties.LTYP
+                  modes.forEach(mode => {if(mode.value == lineType) c = mode.color;});
+
                   // subway
                   if (subway.get(d.properties.LBEZEICHNUNG) != null) {
                       return subway.get(d.properties.LBEZEICHNUNG);
                   }
-                  // tram
-                  else if (d.properties.LTYP == 1) {
-                    return '#CD295A';
-                  }
-                  // bus
-                  else if (d.properties.LTYP == 2) {
-                    return '#38ADAE';
-                  }
-                  // train
-                  else if (d.properties.LTYP == 5) {
-                    return '#C582F0';
-                  }
+
+                  // else
+                  return c;
               });
 
     });
