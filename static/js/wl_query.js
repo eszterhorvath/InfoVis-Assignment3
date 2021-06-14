@@ -8,6 +8,7 @@ let districs = []
 let selectedMode = 4
 let c = "#ff00ff"
 
+let delays = null
 
 function initSelectors() {
     var table = document.getElementById("selection_table");
