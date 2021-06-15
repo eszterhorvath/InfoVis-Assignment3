@@ -43,7 +43,6 @@ async function callSpinners() {
 function queryData() {
 
     if (d3.select("input#delays_radio:checked").node() === null) {
-        console.log("I'm here")
         d3.selectAll("#svg_map").selectAll("g").selectAll("path.line")
             .attr("data-hasDelay", false)
         delays = null;
@@ -225,4 +224,19 @@ function filterLinesByDistrict(district) {
             }
         });
     });
+}
+
+function buttonHandler() {
+    var button = document.getElementById("button");
+    if(button.innerHTML == "+"){
+        button.innerHTML = "─";
+        document.getElementById("districts_checkbox_table2").style.cssText = "visibility:visible;";
+        var h = document.getElementById("districts_checkbox_table").offsetHeight + document.getElementById("districts_checkbox_table2").offsetHeight + 12;
+        document.getElementById("districts_checkbox_container").style.height = h + "px";
+    }
+    else {
+        button.innerHTML = "+";
+        document.getElementById("districts_checkbox_table2").style.cssText = "visibility:hidden;";
+        document.getElementById("districts_checkbox_container").style.height = (document.getElementById("districts_checkbox_table").offsetHeight + 10) + "px";
+    }
 }
