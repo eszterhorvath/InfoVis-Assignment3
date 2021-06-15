@@ -4,7 +4,6 @@ import pandas
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from calculations import *
-from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 
@@ -12,14 +11,18 @@ app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-@app.route('/')
+@app.route("/_data")
+def queryDelays():
+    global i
+    print("Starting query...")
+    data = queryWL()
+    print("Query done.")
+    return data
+
+@app.route("/")
 def data():
 
     return render_template("index.html")
-
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(queryWL, "interval", minutes=1)
-sched.start()
 
 
 if __name__ == '__main__':

@@ -10,6 +10,34 @@ let c = "#ff00ff"
 
 let delays = null
 
+function queryData() {
+    //$SCRIPT_ROOT = {{ request.script_root | safe }}
+    $.getJSON("/_data",
+        (d) => {
+            delays = d;
+    })
+    if (delays == null) {return}
+
+    let lines = d3.selectAll("#svg_map").selectAll("g").selectAll("path.line")
+    lines.attr("data-hasDelay", false).raise()
+    let dshort = delays.stoerungkurz
+    delays.stoerungkurz.forEach((e) => {
+        lines.filter(d => {
+            let isIn = false
+            if (!('relatedLines' in e)) {
+                return false
+            }
+            e.relatedLines.forEach((l) => {
+                isIn = isIn || d.properties.LBEZEICHNUNG.includes(l);
+            })
+            return isIn;
+            //console.log(d3.select(this).attr("data-lineNumbers"))
+        }).attr("data-hasDelay", true)
+    })
+}
+
+setInterval(queryData, 10000)
+
 function initSelectors() {
     var table = document.getElementById("selection_table");
     var cells = table.getElementsByTagName("td");
@@ -47,10 +75,11 @@ function drawLines() {
               .data(lines.features)
               .enter().filter((d) => { return d.properties.LTYP == selectedMode || selectedMode == 0 ||
             (selectedMode == d.properties.LTYP - 5 && selectedMode == 1);}).append('path')
-              .attr('stroke-width', '100.')
             .attr("class", "line").raise()
               .attr('d', viennaPathGenerator)
               .attr('fill', 'none')
+            .attr("data-hasDelay", false)
+                .attr("data-lineNumbers", (d) => {return d.properties.LBEZEICHNUNG; })
               .attr('stroke', (d) => {
                   // select color
                   lineType = d.properties.LTYP
