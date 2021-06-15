@@ -83,6 +83,9 @@ function initSelectors() {
           // set the style of the selected cell
           cell.style.cssText = 'font-size:2.2em;text-decoration:underline;';
           modes.forEach(mode => {if(mode.name == id) selectedMode = mode.value;});
+
+          document.getElementById("no_d").checked = true;
+          document.getElementById("overview_radio").checked = true;
           refreshMap();
         };
       };
@@ -178,15 +181,30 @@ function filterLinesByDistrict(district) {
         districts.features.forEach(d => {
             if(d.properties.BEZNR == district) {
 
+                var linesToKeep = new Array();
+
                 d3.selectAll('.line')
                   .filter((l) => {
-                    var notInDistrict = true;
+                    var inDistrict = false;
                     l.geometry.coordinates.forEach(coord => {
                         if(d3.geoContains(d.geometry, coord)) {
-                            notInDistrict = false;
+                            inDistrict = true;
                         }
                     });
-                    return notInDistrict;
+                    if(inDistrict) {
+                        linesToKeep[linesToKeep.length] = l.properties.LBEZEICHNUNG;
+                    }
+                  });
+
+                  d3.selectAll('.line')
+                  .filter((l) => {
+                    var keep = true;
+                    l.properties.LBEZEICHNUNG.split(',').forEach(line => {
+                        if(linesToKeep.includes(line)) {
+                            keep = false;
+                        }
+                    })
+                    return keep;
                   })
                   .remove();
             }
