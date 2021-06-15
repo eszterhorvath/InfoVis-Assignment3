@@ -75,6 +75,7 @@ function drawDistrictBoarders(district_number) {
 }
 
 function drawAllDistrictBoarders() {
+    clearAllDistrictBoarders();
     drawLines();
     d3.json("../static/data/BEZIRKSGRENZEOGD.json").then(function(districts) {
 

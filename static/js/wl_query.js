@@ -210,5 +210,19 @@ function filterLinesByDistrict(district) {
             }
         });
     });
+}
 
+function buttonHandler() {
+    var button = document.getElementById("button");
+    if(button.innerHTML == "+"){
+        button.innerHTML = "─";
+        document.getElementById("districts_checkbox_table2").style.cssText = "visibility:visible;";
+        var h = document.getElementById("districts_checkbox_table").offsetHeight + document.getElementById("districts_checkbox_table2").offsetHeight + 12;
+        document.getElementById("districts_checkbox_container").style.height = h + "px";
+    }
+    else {
+        button.innerHTML = "+";
+        document.getElementById("districts_checkbox_table2").style.cssText = "visibility:hidden;";
+        document.getElementById("districts_checkbox_container").style.height = (document.getElementById("districts_checkbox_table").offsetHeight + 10) + "px";
+    }
 }
