@@ -8,32 +8,46 @@ let selectedMode = 4
 let c = "#ff00ff"
 
 let delays = null
-let spinners = null
 let nCircle = 8
 
 var queryInterval = setInterval(queryData, 10000)
 
-function callSpinners() {
-    if (spinners === null) {
-        spinners = d3.select("#svg_map").append("g").selectAll("circle")
-            .data(Array(nCircle)).enter()
-            .append("circle").attr("id", (_,i) => "s" + i)
-            .attr("cx", (_, i) => mapWidth/2+50*Math.cos(i/nCircle*2*Math.PI))
-            .attr("cy", (_, i) => mapHeight/2+50*Math.sin(i/nCircle*2*Math.PI))
-            .attr("r", 10)
-            .attr("fill", "#595959")
+async function callSpinners() {
+    console.log("Starting spinners")
+    const svg = d3.select("#svg_map")
+
+    const circles = svg.append("g").selectAll("circle")
+        .data(Array(nCircle)).enter()
+        .append("circle").attr("id", (_, i) => "s" + i)
+        .attr("cx", (_, i) => mapWidth / 2 + 50 * Math.cos(i / nCircle * 2 * Math.PI))
+        .attr("cy", (_, i) => mapHeight / 2 + 50 * Math.sin(i / nCircle * 2 * Math.PI))
+        .attr("r", 10)
+        .attr("fill", "#595959")
+        .attr("opacity", 0)
+
+
+    while (delays == null) {
+
+        await circles
+            .transition()
+            .ease(d3.easeLinear)
+            .duration(1000)
+            .delay((_,i) => i/nCircle*2000)
+            .attr("opacity", 1)
+            .end()
     }
-    console.log(spinners)
+    circles.remove().exit()
+
 }
 
 function queryData() {
 
     if (d3.select("input#delays_radio:checked").node() === null) {
         d3.selectAll("#svg_map").selectAll("g").selectAll("path.line")
-            .attr("data-hasDelay", false).raise()
+            .attr("data-hasDelay", false)
         delays = null;
         return; }
-    if (delays == null) {
+    if (delays == null && d3.selectAll("circle").node() == null) {
         callSpinners()
     }
 
@@ -61,8 +75,6 @@ function queryData() {
             return hasDelay;
         }).attr("data-hasDelay", true)
     })
-
-    spinners.raise()
 }
 
 
@@ -97,6 +109,7 @@ function initSelectors() {
 }
 
 function drawLines() {
+    delays = null
     d3.json("../static/data/OEFFLINIENOGD.json").then((lines) => {
 
         d3.select("#svg_map").append("g")
@@ -122,7 +135,6 @@ function drawLines() {
                   if (subway.get(d.properties.LBEZEICHNUNG) != null) {
                       return subway.get(d.properties.LBEZEICHNUNG);
                   }
-                  console.log(viennaPathGenerator)
 
                   // else
                   return c;
@@ -173,6 +185,7 @@ function drawLines() {
                 document.getElementById("line_name").innerHTML = "";
               });
     });
+    queryData();
 }
 
 function filterLinesByDistrict(district) {
