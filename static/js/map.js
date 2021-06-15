@@ -56,7 +56,6 @@ function initMap() {
     });
 }
 
-
 function drawDistrictBoarders(district_number) {
     d3.json("../static/data/BEZIRKSGRENZEOGD.json").then(function(districts) {
 
@@ -68,13 +67,15 @@ function drawDistrictBoarders(district_number) {
           .append('path')
           .attr("class", "border").raise()
           .attr('d', viennaPathGenerator)
-          .attr('fill', 'none')
+          .attr('fill', '#38ADAE')
+          .attr('fill-opacity', '0.2')
           .attr('stroke', "black");
 
     });
 }
 
 function drawAllDistrictBoarders() {
+    drawLines();
     d3.json("../static/data/BEZIRKSGRENZEOGD.json").then(function(districts) {
 
         d3.select("#svg_map").append("g")
@@ -91,11 +92,16 @@ function drawAllDistrictBoarders() {
 }
 
 function clearAllDistrictBoarders() {
+    drawLines();
     d3.selectAll('.border')
       .remove();
 }
 
 function districtSelected(d) {
     clearAllDistrictBoarders();
+    drawLines();
+
     drawDistrictBoarders(d);
+
+    filterLinesByDistrict(d);
 }

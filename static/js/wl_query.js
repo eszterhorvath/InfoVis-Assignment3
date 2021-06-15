@@ -3,7 +3,6 @@ let subway = new Map([["U1", "#E3000F" ], ["U2", "#A862A4"], ["U3", "#EF7C00"],
 let modes = [{"name": "All", "value": 0}, {"name": "Subway", "value": 4, "color": subway}, {"name": "Tram", "value": 1, "color": '#CD295A'},
     {"name": "Bus", "value": 2, "color": '#C582F0'}, {"name": "Train", "value": 5, "color": '#38ADAE'},
     {"name": "Wiener Lokalbahnen", "color": "#CD295A", "value": 6}]
-let districs = []
 
 let selectedMode = 4
 let c = "#ff00ff"
@@ -142,4 +141,28 @@ function drawLines() {
               });
 
     });
+}
+
+function filterLinesByDistrict(district) {
+
+    d3.json("../static/data/BEZIRKSGRENZEOGD.json").then(function(districts) {
+
+        districts.features.forEach(d => {
+            if(d.properties.BEZNR == district) {
+
+                d3.selectAll('.line')
+                  .filter((l) => {
+                    var notInDistrict = true;
+                    l.geometry.coordinates.forEach(coord => {
+                        if(d3.geoContains(d.geometry, coord)) {
+                            notInDistrict = false;
+                        }
+                    });
+                    return notInDistrict;
+                  })
+                  .remove();
+            }
+        });
+    });
+
 }
