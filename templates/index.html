@@ -46,15 +46,120 @@
 
 </div>
 
-<div class="checkbox_container">
-        <table id="checkbox_table">
+<div class="views_checkbox_container">
+        <table id="views_checkbox_table">
           <tr>
-            <td><input type="radio" id="radio1" name="radiobuttons" checked="true"></td>
-            <td><label for="radio1" id="label1">Overview</label></td>
+            <td><input type="radio" id="overview_radio" name="views_radio_buttons" checked="true"></td>
+            <td><label for="overview_radio" id="label_overview">Overview</label></td>
           </tr>
           <tr>
-            <td><input type="radio" id="radio2" name="radiobuttons"></td>
-            <td><label for="radio2" id="label2">Delays</label></td>
+            <td><input type="radio" id="delays_radio" name="views_radio_buttons"></td>
+            <td><label for="delays_radio" id="label_delays">Delays</label></td>
+          </tr>
+        </table>
+</div>
+
+<div class="districts_checkbox_container">
+        <table id="districts_checkbox_table">
+          <tr>
+            <td><input type="radio" id="no_d" name="districts_radio_buttons" checked="true" onclick="clearAllDistrictBoarders();"></td>
+            <td><label for="no_d">No districts selected</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="all" name="districts_radio_buttons" onclick="drawAllDistrictBoarders();"></td>
+            <td><label for="all">Show all district borders</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d1" name="districts_radio_buttons" onclick="districtSelected(1);"></td>
+            <td><label for="d1">District 1</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d2" name="districts_radio_buttons" onclick="districtSelected(2);"></td>
+            <td><label for="d2">District 2</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d3" name="districts_radio_buttons" onclick="districtSelected(3);"></td>
+            <td><label for="d3">District 3</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d4" name="districts_radio_buttons" onclick="districtSelected(4);"></td>
+            <td><label for="d4">District 4</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d5" name="districts_radio_buttons" onclick="districtSelected(5);"></td>
+            <td><label for="d5">District 5</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d6" name="districts_radio_buttons" onclick="districtSelected(6);"></td>
+            <td><label for="d6">District 6</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d7" name="districts_radio_buttons" onclick="districtSelected(7);"></td>
+            <td><label for="d7">District 7</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d8" name="districts_radio_buttons" onclick="districtSelected(8);"></td>
+            <td><label for="d8">District 8</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d9" name="districts_radio_buttons" onclick="districtSelected(9);"></td>
+            <td><label for="d9">District 9</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d10" name="districts_radio_buttons" onclick="districtSelected(10);"></td>
+            <td><label for="d10">District 10</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d11" name="districts_radio_buttons" onclick="districtSelected(11);"></td>
+            <td><label for="d11">District 11</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d12" name="districts_radio_buttons" onclick="districtSelected(12);"></td>
+            <td><label for="d12">District 12</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d13" name="districts_radio_buttons" onclick="districtSelected(13);"></td>
+            <td><label for="d13">District 13</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d14" name="districts_radio_buttons" onclick="districtSelected(14);"></td>
+            <td><label for="d14">District 14</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d15" name="districts_radio_buttons" onclick="districtSelected(15);"></td>
+            <td><label for="d15">District 15</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d16" name="districts_radio_buttons" onclick="districtSelected(16);"></td>
+            <td><label for="d16">District 16</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d17" name="districts_radio_buttons" onclick="districtSelected(17);"></td>
+            <td><label for="d17">District 17</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d18" name="districts_radio_buttons" onclick="districtSelected(18);"></td>
+            <td><label for="d18">District 18</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d19" name="districts_radio_buttons" onclick="districtSelected(19);"></td>
+            <td><label for="d19">District 19</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d20" name="districts_radio_buttons" onclick="districtSelected(20);"></td>
+            <td><label for="d20">District 20</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d21" name="districts_radio_buttons" onclick="districtSelected(21);"></td>
+            <td><label for="d21">District 21</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d22" name="districts_radio_buttons" onclick="districtSelected(22);"></td>
+            <td><label for="d22">District 22</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" id="d23" name="districts_radio_buttons" onclick="districtSelected(23);"></td>
+            <td><label for="d23">District 23</label></td>
           </tr>
         </table>
 </div>
@@ -73,9 +178,9 @@
     // calls the map rendering
     initMap();
     initSelectors();
-    drawLines(1)
+    drawLines();
 
-    queryData()
+    queryData();
 </script>
 
 </body>

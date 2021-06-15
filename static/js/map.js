@@ -16,6 +16,8 @@ function refreshMap() {
     viennaPathGenerator = d3.geoPath().projection(viennaProjection);
 
     redrawMap();
+
+    drawLines();
 }
 
 function redrawMap() {
@@ -52,4 +54,48 @@ function initMap() {
               .attr('stroke', '#999999')
               .attr('stroke-width', '0.5');
     });
+}
+
+
+function drawDistrictBoarders(district_number) {
+    d3.json("../static/data/BEZIRKSGRENZEOGD.json").then(function(districts) {
+
+        d3.select("#svg_map").append("g")
+          .selectAll('path')
+          .data(districts.features)
+          .enter()
+          .filter((d) => { return d.properties.BEZNR == district_number;})
+          .append('path')
+          .attr("class", "border").raise()
+          .attr('d', viennaPathGenerator)
+          .attr('fill', 'none')
+          .attr('stroke', "black");
+
+    });
+}
+
+function drawAllDistrictBoarders() {
+    d3.json("../static/data/BEZIRKSGRENZEOGD.json").then(function(districts) {
+
+        d3.select("#svg_map").append("g")
+          .selectAll('path')
+          .data(districts.features)
+          .enter()
+          .append('path')
+          .attr("class", "border").raise()
+          .attr('d', viennaPathGenerator)
+          .attr('fill', 'none')
+          .attr('stroke', "black");
+
+    });
+}
+
+function clearAllDistrictBoarders() {
+    d3.selectAll('.border')
+      .remove();
+}
+
+function districtSelected(d) {
+    clearAllDistrictBoarders();
+    drawDistrictBoarders(d);
 }

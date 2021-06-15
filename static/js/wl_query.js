@@ -65,8 +65,6 @@ function initSelectors() {
       // by default the first cell (Subway) is selected
       table.rows[0].cells[0].style.cssText = 'font-size:2.2em;text-decoration:underline;';
     }
-
-    drawLines();
 }
 
 function drawLines() {
@@ -80,8 +78,8 @@ function drawLines() {
               .attr("class", "line").raise()
               .attr('d', viennaPathGenerator)
               .attr('fill', 'none')
-            .attr("data-hasDelay", false)
-                .attr("data-lineNumbers", (d) => {return d.properties.LBEZEICHNUNG; })
+              .attr("data-hasDelay", false)
+              .attr("data-lineNumbers", (d) => {return d.properties.LBEZEICHNUNG; })
               .attr('stroke', (d) => {
                   // select color
                   lineType = d.properties.LTYP;
@@ -97,7 +95,7 @@ function drawLines() {
                   // else
                   return c;
               })
-            .on("mouseover", (d) => {
+              .on("mouseover", (d) => {
                 var line = d.properties.lines[0];
 
                 d3.select("#svg_map")
@@ -110,16 +108,15 @@ function drawLines() {
                         return "#38ADAE";
                       }
                       else return "#CD295A";
-                  })
-                  .attr("r", 100);
+                  });
 
                 d3.select("#line_name")
                     .style("visibility", "visible")
                     .style("left", event.pageX + "px")
                     .style("top", event.pageY + "px");
                 document.getElementById("line_name").innerHTML = line;
-            })
-            .on("mouseout", (d) => {
+              })
+              .on("mouseout", (d) => {
                 var line = d.properties.lines[0];
 
                 d3.select("#svg_map")
@@ -137,13 +134,12 @@ function drawLines() {
 
                       // else
                       return c;
-                  })
-                  .attr("r", 0);
+                  });
 
                 d3.select("#line_name")
-                    .style("visibility", "hidden");
+                  .style("visibility", "hidden");
                 document.getElementById("line_name").innerHTML = "";
-            });
+              });
 
     });
 }

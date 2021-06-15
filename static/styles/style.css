@@ -8,10 +8,10 @@ body {
 
 .container {
     border: 0px solid #f00;
+    margin: 180px 10px 10px 10px;
     text-align: center;
     font-size: large;
     display: flex;
-    margin: 0;
 }
 
 .selector {
@@ -137,9 +137,30 @@ svg {
     color: black;
 }
 
-.checkbox_container {
+.views_checkbox_container {
     display: flex;
-    margin: 180px 10px 10px 10px;
+    margin: 5px;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    color: white;
+    background-color: #CD295A;
+    border-radius: 8px;
+    opacity: 0.8;
+}
+
+.districts_checkbox_container {
+    display: flex;
+    margin: 5px;
+    float: right;
+    text-align: left;
+    vertical-align: middle;
+    padding: 5px;
+    color: white;
+    background-color: #38ADAE;
+    border-radius: 8px;
+    opacity: 0.8;
 }
 
 .line {
@@ -164,4 +185,8 @@ svg {
     z-index: 1;
     border-radius: 8px;
     visibility: hidden;
+}
+
+.border {
+    stroke-width: 1.5;
 }
