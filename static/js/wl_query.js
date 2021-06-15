@@ -98,11 +98,11 @@ function drawLines() {
                   return c;
               })
             .on("mouseover", (d) => {
-                var line = d.properties.LBEZEICHNUNG.split(',')[0];
+                var line = d.properties.lines[0];
 
                 d3.select("#svg_map")
                   .selectAll('path')
-                  .filter((d) => { return d.properties.LBEZEICHNUNG != null && d.properties.LBEZEICHNUNG.includes(line);})
+                  .filter((d) => { return d.properties.LBEZEICHNUNG != null && d.properties.lines.includes(line);})
                   .attr('stroke', (d) => {
                       // select color
                       lineType = d.properties.LTYP;
@@ -120,11 +120,11 @@ function drawLines() {
                 document.getElementById("line_name").innerHTML = line;
             })
             .on("mouseout", (d) => {
-                var line = d.properties.LBEZEICHNUNG.split(',')[0];
+                var line = d.properties.lines[0];
 
                 d3.select("#svg_map")
                   .selectAll('path')
-                  .filter((d) => { return  d.properties.LBEZEICHNUNG != null && d.properties.LBEZEICHNUNG.includes(line);})
+                  .filter((d) => { return  d.properties.LBEZEICHNUNG != null && d.properties.lines.includes(line);})
                   .attr('stroke', (d) => {
                       // select color
                       lineType = d.properties.LTYP;
