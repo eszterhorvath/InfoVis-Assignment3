@@ -11,6 +11,8 @@ let delays = null
 let spinners = null
 let nCircle = 8
 
+var queryInterval = setInterval(queryData, 10000)
+
 function callSpinners() {
     if (spinners === null) {
         spinners = d3.select("#svg_map").append("g").selectAll("circle")
@@ -63,7 +65,6 @@ function queryData() {
     spinners.raise()
 }
 
-setInterval(queryData, 10000)
 
 function initSelectors() {
     var table = document.getElementById("selection_table");
@@ -121,6 +122,7 @@ function drawLines() {
                   if (subway.get(d.properties.LBEZEICHNUNG) != null) {
                       return subway.get(d.properties.LBEZEICHNUNG);
                   }
+                  console.log(viennaPathGenerator)
 
                   // else
                   return c;
@@ -169,8 +171,7 @@ function drawLines() {
                 d3.select("#line_name")
                   .style("visibility", "hidden");
                 document.getElementById("line_name").innerHTML = "";
-              }).raise();
-
+              });
     });
 }
 
