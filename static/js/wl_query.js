@@ -8,8 +8,33 @@ let selectedMode = 4
 let c = "#ff00ff"
 
 let delays = null
+let spinners = null
+let nCircle = 8
+
+function callSpinners() {
+    if (spinners === null) {
+        spinners = d3.select("#svg_map").append("g").selectAll("circle")
+            .data(Array(nCircle)).enter()
+            .append("circle").attr("id", (_,i) => "s" + i)
+            .attr("cx", (_, i) => mapWidth/2+50*Math.cos(i/nCircle*2*Math.PI))
+            .attr("cy", (_, i) => mapHeight/2+50*Math.sin(i/nCircle*2*Math.PI))
+            .attr("r", 10)
+            .attr("fill", "#595959")
+    }
+    console.log(spinners)
+}
 
 function queryData() {
+
+    if (d3.select("input#delays_radio:checked").node() === null) {
+        d3.selectAll("#svg_map").selectAll("g").selectAll("path.line")
+            .attr("data-hasDelay", false).raise()
+        delays = null;
+        return; }
+    if (delays == null) {
+        callSpinners()
+    }
+
     //$SCRIPT_ROOT = {{ request.script_root | safe }}
     $.getJSON("/_data",
         (d) => {
@@ -32,9 +57,10 @@ function queryData() {
                     hasDelay = true};
             })
             return hasDelay;
-            //console.log(d3.select(this).attr("data-lineNumbers"))
-        }).text(() => {console.log(e)}).attr("data-hasDelay", true)
+        }).attr("data-hasDelay", true)
     })
+
+    spinners.raise()
 }
 
 setInterval(queryData, 10000)
@@ -72,8 +98,10 @@ function drawLines() {
         d3.select("#svg_map").append("g")
               .selectAll('path')
               .data(lines.features)
-              .enter().filter((d) => { return d.properties.LTYP == selectedMode || selectedMode == 0 ||
-                    (selectedMode == d.properties.LTYP - 5 && selectedMode == 1);}).append('path')
+              .enter().filter((d) => {
+                  return d.properties.LTYP == selectedMode || selectedMode == 0 ||
+                    (selectedMode == d.properties.LTYP - 5 && selectedMode == 1);})
+                .append('path')
               .attr("class", "line").raise()
               .attr('d', viennaPathGenerator)
               .attr('fill', 'none')
@@ -138,7 +166,7 @@ function drawLines() {
                 d3.select("#line_name")
                   .style("visibility", "hidden");
                 document.getElementById("line_name").innerHTML = "";
-              });
+              }).raise();
 
     });
 }
