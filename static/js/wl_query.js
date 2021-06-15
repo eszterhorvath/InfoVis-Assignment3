@@ -16,23 +16,25 @@ function queryData() {
         (d) => {
             delays = d;
     })
-    if (delays == null) {return}
+    if (delays == null) {        return;
+    }
 
     let lines = d3.selectAll("#svg_map").selectAll("g").selectAll("path.line")
     lines.attr("data-hasDelay", false).raise()
     let dshort = delays.stoerungkurz
     delays.stoerungkurz.forEach((e) => {
         lines.filter(d => {
-            let isIn = false
             if (!('relatedLines' in e)) {
                 return false
             }
+            var hasDelay = false
             e.relatedLines.forEach((l) => {
-                isIn = isIn || d.properties.LBEZEICHNUNG.includes(l);
+                if (d.properties.lines.includes(l)) {
+                    hasDelay = true};
             })
-            return isIn;
+            return hasDelay;
             //console.log(d3.select(this).attr("data-lineNumbers"))
-        }).attr("data-hasDelay", true)
+        }).text(() => {console.log(e)}).attr("data-hasDelay", true)
     })
 }
 
@@ -84,6 +86,8 @@ function drawLines() {
                   // select color
                   lineType = d.properties.LTYP;
                   modes.forEach(mode => {if(mode.value == lineType) c = mode.color;});
+
+                  d.properties.lines = d.properties.LBEZEICHNUNG.split(", ")
 
                   // subway
                   if (subway.get(d.properties.LBEZEICHNUNG) != null) {

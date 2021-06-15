@@ -13,7 +13,6 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/_data")
 def queryDelays():
-    global i
     print("Starting query...")
     data = queryWL()
     print("Query done.")
