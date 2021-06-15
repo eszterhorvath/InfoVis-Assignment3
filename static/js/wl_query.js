@@ -1,8 +1,8 @@
 let subway = new Map([["U1", "#E3000F" ], ["U2", "#A862A4"], ["U3", "#EF7C00"],
     ["U4", "#00963F"], ["U5", "#008F95"], ["U6", "#9D6830"]])
-let modes = [{"name": "All modes", "value": 0}, {"name": "Subway", "value": 4, "color": subway}, {"name": "Tram", "value": 1, "color": '#CD295A'},
+let modes = [{"name": "All", "value": 0}, {"name": "Subway", "value": 4, "color": subway}, {"name": "Tram", "value": 1, "color": '#CD295A'},
     {"name": "Bus", "value": 2, "color": '#C582F0'}, {"name": "Train", "value": 5, "color": '#38ADAE'},
-    {"name": "Wiener Lokalbahnen", "color": "#005295", "value": 6}]
+    {"name": "Wiener Lokalbahnen", "color": "#CD295A", "value": 6}]
 let districs = []
 
 let selectedMode = 4
@@ -50,7 +50,7 @@ function initSelectors() {
           var id = cell.innerHTML;
           // set back the previously selected option's style to normal
           var j;
-          for(j = 0; j < 4; j++) {
+          for(j = 0; j < 5; j++) {
             table.rows[0].cells[j].style.cssText = 'font-size:1.2em;text-decoration:none;';
           }
           // set the style of the selected cell
@@ -74,15 +74,15 @@ function drawLines() {
               .selectAll('path')
               .data(lines.features)
               .enter().filter((d) => { return d.properties.LTYP == selectedMode || selectedMode == 0 ||
-            (selectedMode == d.properties.LTYP - 5 && selectedMode == 1);}).append('path')
-            .attr("class", "line").raise()
+                    (selectedMode == d.properties.LTYP - 5 && selectedMode == 1);}).append('path')
+              .attr("class", "line").raise()
               .attr('d', viennaPathGenerator)
               .attr('fill', 'none')
             .attr("data-hasDelay", false)
                 .attr("data-lineNumbers", (d) => {return d.properties.LBEZEICHNUNG; })
               .attr('stroke', (d) => {
                   // select color
-                  lineType = d.properties.LTYP
+                  lineType = d.properties.LTYP;
                   modes.forEach(mode => {if(mode.value == lineType) c = mode.color;});
 
                   // subway
@@ -92,7 +92,54 @@ function drawLines() {
 
                   // else
                   return c;
-              });
+              })
+            .on("mouseover", (d) => {
+                var line = d.properties.LBEZEICHNUNG.split(',')[0];
+
+                d3.select("#svg_map")
+                  .selectAll('path')
+                  .filter((d) => { return d.properties.LBEZEICHNUNG != null && d.properties.LBEZEICHNUNG.includes(line);})
+                  .attr('stroke', (d) => {
+                      // select color
+                      lineType = d.properties.LTYP;
+                      if(lineType == 1 || lineType == 6) {
+                        return "#38ADAE";
+                      }
+                      else return "#CD295A";
+                  })
+                  .attr("r", 100);
+
+                d3.select("#line_name")
+                    .style("visibility", "visible")
+                    .style("left", event.pageX + "px")
+                    .style("top", event.pageY + "px");
+                document.getElementById("line_name").innerHTML = line;
+            })
+            .on("mouseout", (d) => {
+                var line = d.properties.LBEZEICHNUNG.split(',')[0];
+
+                d3.select("#svg_map")
+                  .selectAll('path')
+                  .filter((d) => { return  d.properties.LBEZEICHNUNG != null && d.properties.LBEZEICHNUNG.includes(line);})
+                  .attr('stroke', (d) => {
+                      // select color
+                      lineType = d.properties.LTYP;
+                      modes.forEach(mode => {if(mode.value == lineType) c = mode.color;});
+
+                      // subway
+                      if (subway.get(d.properties.LBEZEICHNUNG) != null) {
+                          return subway.get(d.properties.LBEZEICHNUNG);
+                      }
+
+                      // else
+                      return c;
+                  })
+                  .attr("r", 0);
+
+                d3.select("#line_name")
+                    .style("visibility", "hidden");
+                document.getElementById("line_name").innerHTML = "";
+            });
 
     });
 }

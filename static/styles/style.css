@@ -145,7 +145,23 @@ svg {
 .line {
     stroke-width: 2;
 }
+
 .line[data-hasDelay=true] {
     stroke-width: 3;
     filter: brightness(50%);
+}
+
+#line_name {
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    width: 40px;
+    height: 20px;
+    padding: 5px;
+    color: white;
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 1;
+    border-radius: 8px;
+    visibility: hidden;
 }
